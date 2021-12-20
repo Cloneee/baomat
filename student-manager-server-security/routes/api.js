@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
         const hash = hashPassword(data.password)
         const userDB = await userModel.findOne({ username: data.username })
         if (!userDB){
-            const newUser = new userModel({ name: data.name, username: data.username, password: hash, role: data.role ? data.role : 'user' })
+            const newUser = new userModel({ name: data.name, username: data.username, password: hash, role: data.role ? data.role : 'student' })
             await newUser.save()
             res.json({ msg: "Success register" })
         }
