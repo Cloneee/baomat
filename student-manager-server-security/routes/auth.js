@@ -4,7 +4,6 @@ const { hashPassword, comparePassword } = require('../functions/hash')
 const axios = require('axios')
 const userModel = require('../models/userModel')
 
-
 // * Login register section
 router.post('/login', async (req, res, next) => {
     const user = req.body
@@ -13,10 +12,10 @@ router.post('/login', async (req, res, next) => {
         res.status(400).json({ msg: "User don't exist" })
     }
     else if (comparePassword(user.password, userDB.password)) {
-        axios.post("http://localhost:8000/api/v1/jwt", { name: user.username, username: user.username, role: user.role })
+        axios.post("http://localhost:8000/api/v1/jwt", { name: userDB.name, username: userDB.username, role: userDB.role })
             .then(respone => {
                 const jwt = respone.data
-                res.cookie("token", JSON.stringify(jwt), {
+                res.cookie("token", jwt.token, {
                     secure: true,
                     httpOnly: true,
                 }).json({ msg: "Hello " + userDB.name, name: userDB.name })
