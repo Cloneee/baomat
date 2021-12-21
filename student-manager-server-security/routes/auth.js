@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { hashPassword, comparePassword } = require('../functions/hash')
 const axios = require('axios')
+const userModel = require('../models/userModel')
+
 
 // * Login register section
 router.post('/login', async (req, res, next) => {
