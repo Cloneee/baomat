@@ -14,11 +14,14 @@ Cách phòng chống XSS (Cross site scripting) và ngăn chặn leak data bằn
 
 ## Hướng dẫn chạy chương trình
 
-1. Đảm bảo máy tính đã cài đặt đầy đủ requirement
+1. Đảm bảo máy tính đã cài đặt NodeJS
 
-2. Cài đặt node_modules ở cả 3 thư mục server
+2. Chương trình có 3 thư mục chính
+
     - auth-server-security
     - student-manager-server-security
     - client-server-security
 
-3. Chạy file **run.bat** trong thử mục giải nén
+3. Chạy file **install.bat** trong thử mục giải nén để cài đặt node_modules ở cả 3 thư mục server (Chỉ dùng ở lần chạy đầu tiên)
+
+4. Chạy file **run.bat** trong thử mục giải nén để chạy cả 3 server
