@@ -21,8 +21,11 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
     department:{
-        type: mongoose.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Department'
+    },
+    description:{
+        type: String
     },
     role: {
         type: String,
@@ -32,6 +35,10 @@ const UserSchema = new mongoose.Schema({
     createDate: {
         type: Date,
         default: Date.now
+    },
+    updateDate:{
+        type: Date,
+        defaultl: Date.now
     }
 })
 

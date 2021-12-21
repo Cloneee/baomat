@@ -11,14 +11,17 @@ router.get('/user', async (req, res) => {
     try {
         let page = req.query.page ? Number(req.query.page) : 1,
             limit = req.query.limit ? Number(req.query.limit) : 20
+        page<1 || isNaN(page)? page = 1 : null
+        
         Promise.all([
             userModel.find()
                 .sort({ role: 1, createDate: req.query.sort === 'desc' ? -1 : 1 })
-                .select({ __v: false, password: false, createDate: false })
+                .select({ __v: false, password: false })
                 .limit(limit)
-                .skip((page - 1) * limit),
+                .skip((page - 1) * limit)
+                .populate('department'),
             userModel.count()
-        ]).then(([data, total])=>res.json({ currentPage: page, limit: limit, totalPage: total, data: data }))
+        ]).then(([data, total]) => res.json({ currentPage: page, limit: limit, totalPage: total % limit != 0? parseInt(total/limit+1) : total/limit, data: data }))
     } catch (error) {
         res.status(400).json({ err: "Unexpected error" })
     }
@@ -27,17 +30,48 @@ router.get('/user', async (req, res) => {
 router.get('/user/:username', async (req, res) => {
     try {
         const username = req.params.username
-        const user = await userModel.findOne({ username: username }).select({__v: false, createDate: false, password: false})
+        const user = await userModel.findOne({ username: username }).select({ __v: false, createDate: false, password: false }).populate('department')
         user ? res.status(200).json(user) : res.status(404).json({ msg: 'User not found' })
     } catch (error) {
         res.status(400).json({ err: "Unexpeted error" })
     }
 })
+router
+    .route('/user/:username')
+    .put(async (req, res) => {
+        try {
+            let user = await userModel.findOne({ username: req.params.username })
+            let newData = {
+                name: req.body.name,
+                mssv: req.body.mssv,
+                class: req.body.class,
+                department: req.body.department,
+                description: req.body.description,
+                role: req.body.role
+            }
+            Object.keys(newData).forEach(function (key) {
+                newData[key] ? user[key] = newData[key] : null
+            })
+            user.updateDate = Date.now()
+            await user.save()
+            res.json({ msg: "Success edit profile" })
+        } catch (error) {
+            res.status(400).json({ err: "Unexpeted error" })
+        }
+    })
+    .delete(async (req,res)=>{
+        try {
+            userModel.deleteOne({username: req.params.username})
+                .then(resp=>res.json({msg: "Deleted " + req.params.username, value: req.params.username}))
+        } catch (error) {
+            res.status(400).json({ err: "Unexpeted error" })
+        }
+    })
 
 // * Department section
 router.get('/department', async (req, res) => {
-    departmentModel.find().select({ _id: false, __v: false })
-        .then(docs => res.json(docs.map(el => el.name))) // Chuyển object department thành array
+    departmentModel.find().select({ __v: false })
+        .then(docs => res.json(docs))
         .catch(err => res.status(400).json({ err: "Something wrong" }))
 })
 
