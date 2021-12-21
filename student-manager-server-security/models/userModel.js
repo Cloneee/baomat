@@ -21,14 +21,18 @@ const UserSchema = new mongoose.Schema({
         type: String
     },
     department:{
-        type: String
+        type: mongoose.ObjectId,
+        ref: 'Department'
     },
     role: {
         type: String,
         enum: ['admin', 'student'],
         default: 'student'
+    },
+    createDate: {
+        type: Date,
+        default: Date.now
     }
-
 })
 
-module.exports = mongoose.model('UserModel', UserSchema)
+module.exports = mongoose.model('User', UserSchema)
