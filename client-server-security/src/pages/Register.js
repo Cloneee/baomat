@@ -31,6 +31,7 @@ const Register = () => {
 
     const onFinish = (user) => {
         loginHandle(user);
+        console.log(user)
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -51,6 +52,42 @@ const Register = () => {
                                 onFinishFailed={onFinishFailed}
                                 autoComplete="off"
                             >
+                                <Form.Item
+                                    label="Họ và tên:"
+                                    name="name"
+                                    rules={[
+                                        { required: true, message: "Vui lòng nhập tên!" },
+                                        {
+                                            pattern: /[\D]/g,
+                                            message: "Tên phải bắt đầu bằng chữ",
+                                        },
+                                    ]}
+                                    hasFeedback
+                                >
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    label="MSSV : "
+                                    name="mssv"
+                                    rules={[
+                                        { required: true, message: "Vui lòng nhập MSSV!" },
+
+                                    ]}
+                                    hasFeedback
+                                >
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Lớp : "
+                                    name="class"
+                                    rules={[
+                                        { required: true, message: "Vui lòng nhập Lớp!" },
+
+                                    ]}
+                                    hasFeedback
+                                >
+                                    <Input />
+                                </Form.Item>
                                 <Form.Item
                                     label="Tài khoản:"
                                     name="username"
