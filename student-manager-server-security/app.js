@@ -3,6 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors')
 
 const apiRouter = require('./routes/api');
 const authRouter = require('./routes/auth');
@@ -22,6 +23,7 @@ const db = mongoose.connection
 mongoose.connect(process.env.DB_CONNECTION || uri, { useNewUrlParser: true, useUnifiedTopology: true})
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 //End DB Section
+app.use(cors())
 app.use('/auth', authRouter)
 app.use('/api/v1', apiRouter);
 app.use('*', (req,res)=>{
