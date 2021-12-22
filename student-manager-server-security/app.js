@@ -23,7 +23,7 @@ const db = mongoose.connection
 mongoose.connect(process.env.DB_CONNECTION || uri, { useNewUrlParser: true, useUnifiedTopology: true})
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 //End DB Section
-app.use(cors())
+app.use(cors({origin: "http://localhost:3000"}))
 app.use('/auth', authRouter)
 app.use('/api/v1', apiRouter);
 app.use('*', (req,res)=>{

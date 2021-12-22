@@ -11,6 +11,7 @@ router.get('/user', isAdmin, async (req, res) => {
         let page = req.query.page ? Number(req.query.page) : 1,
             limit = req.query.limit ? Number(req.query.limit) : 20
         page < 1 || isNaN(page) ? page = 1 : null
+        limit < 1 || isNaN(limit) ? limit = 20 : null
 
         Promise.all([
             userModel.find()

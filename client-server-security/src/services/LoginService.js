@@ -6,7 +6,7 @@ function LoginService() {}
 LoginService.prototype = {
     login(user) {
         console.log(API_SIGN_IN);
-        return axios.post(API_SIGN_IN, user, { withCredentials: true }).then((resp) => {
+        return axios.post(API_SIGN_IN, user).then((resp) => {
             const accessToken = resp.data;
             if (accessToken) {
                 sessionStorage.setItem("accessToken", accessToken);
