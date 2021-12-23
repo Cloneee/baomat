@@ -60,11 +60,11 @@ export const updateStudents = (student) => {
     };
 };
 
-export const deleteProducts = (product) => {
+export const deleteStudent = (student) => {
     return (dispatch) => {
         return axios
-            .delete(API_PRODUCT + `/${product.id}`)
-            .then((resp) => {
+            .delete(API_STUDENT + `/${student.id}`)
+            .then(() => {
 
             })
             .catch((err) => console.error(err));
@@ -80,10 +80,10 @@ export const getSuppliers = () => {
             .catch((err) => console.error(err));
     };
 };
-export const addSuppliers = (supplier) => {
+export const addStudent = (student) => {
     return (dispatch) => {
         return axios
-            .post(API_SUPPLIER, supplier)
+            .post(API_STUDENT, student)
             .then((resp) => {
 
             })

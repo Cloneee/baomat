@@ -5,7 +5,7 @@ import {
     Table, Tag, Button, Modal, Form,
     Input, Select, DatePicker, Switch, InputNumber
 } from 'antd';
-import { getstudentById, getStudents, updateStudents,  } from '../../redux/action/actStudent';
+import { addStudent, getstudentById, getStudents, updateStudents, } from '../../redux/action/actStudent';
 import { Option } from 'antd/lib/mentions';
 import { getDepartments } from '../../redux/action/actDepartment';
 const ListStudent = () => {
@@ -85,16 +85,25 @@ const ListStudent = () => {
         setisShowAddModal(true)
     };
     const onFormSubmitAddModal = (values) => {
-        values.createdAt = values.createdAt.format("YYYY-MM-DDTHH:mm:ss")
-        // dispatch(addProducts(values))
-        //     .then(res => {
-        //         handleCancelAddModal()
-        //     })
-        //     .catch(res => {
-        //         handleCancelAddModal()
-        //     })
-        setisNeedRerender(true)
 
+        console.log(values)
+        dispatch(addStudent(values))
+        .then(()=>{
+            setisShowAddModal(false)
+            Modal.success({
+                content: 'Thêm thành công',
+            });
+            setisNeedRerender(true)
+            setisNeedRerender(false)
+        })
+        .catch(err =>{
+            setisShowAddModal(false)
+            Modal.success({
+                content: 'Thêm thất bại',
+            });
+            setisNeedRerender(true)
+            setisNeedRerender(false)
+        })
     };
     const footerOfAddModal = [
         <Button key="back" onClick={() => handleCancelAddModal()}>
@@ -113,7 +122,7 @@ const ListStudent = () => {
 
     const [isShowDetailModal, setisShowDetailModal] = useState(false)
 
-  
+
 
     const handleCancel = () => {
         setisShowDetailModal(false)
@@ -125,14 +134,14 @@ const ListStudent = () => {
     // }
     const showDetailModal = (obj) => {
         dispatch(getstudentById(obj.username))
-        .then(() =>{
-            setisShowDetailModal(true)
+            .then(() => {
+                setisShowDetailModal(true)
 
-        })
-        
-    
+            })
+
+
     }
-    
+
     const footerOfDetailModal = [
         <Button key="back" onClick={() => handleCancel()}>
 
@@ -148,16 +157,25 @@ const ListStudent = () => {
     const onFormSubmit = (obj) => {
         console.log(obj)
         dispatch(updateStudents(obj))
-        .then(()=>{
-            setisShowDetailModal(false)
-            Modal.success({
-                content: 'Cập nhật thành công',
-              });
-            setisNeedRerender(true)
-            setisNeedRerender(false)
-            
+            .then(() => {
+                setisShowDetailModal(false)
+                Modal.success({
+                    content: 'Cập nhật thành công',
+                });
+                setisNeedRerender(true)
+                setisNeedRerender(false)
 
-        })
+
+            })
+            .catch(err =>{
+                setisShowDetailModal(false)
+                Modal.error({
+                    content: 'Cập nhật thất bại',
+                });
+                setisNeedRerender(true)
+                setisNeedRerender(false)
+
+            })
     }
     return (
         <div>
@@ -182,42 +200,59 @@ const ListStudent = () => {
 
 
 
-                        <Form.Item label="Tên sản phẩm:" name="name"
+
+
+                        <Form.Item label="Họ và tên:" name="name"
                             rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
                             hasFeedback>
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Giá:" name="price"
+                        <Form.Item label="Tài khoản" name="username"
                             rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
                             hasFeedback>
 
-                            <InputNumber />
-                        </Form.Item>
-                        <Form.Item label="Khuyến mãi:" name="discount"
-                            rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
-                            hasFeedback>
-                            <InputNumber />
-                        </Form.Item>
-                        <Form.Item label="Thuế:" name="tax"
-                            rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
-                            hasFeedback>
-                            <InputNumber />
-                        </Form.Item>
-                        <Form.Item label="Nguyên liệu:" name="material"
-                            rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
-                            hasFeedback>
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Nguồn gốc:" name="origin"
-                            rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
-                            hasFeedback>
+                        <Form.Item label="Role" name="role"  >
+                            <Select name="role" style={{ width: '100%' }}  >
+                                {
+
+
+                                    ['admin', 'student'].map((department, id) => {
+                                        return <Option key={id} value={department}>{department}</Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item label="MSSV" name="mssv"
+                        >
+
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Thông tin:" name="description"
-                            rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
-                            hasFeedback>
+                        <Form.Item label="Lớp" name="class"
+                        >
+
                             <Input />
                         </Form.Item>
+                        <Form.Item label="Khoa" name="department"  >
+                            <Select name="department" style={{ width: '100%' }}  >
+                                {
+
+
+                                    listDepartment.map((department, id) => {
+                                        return <Option key={id} value={department._id}>{department.name}</Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item label="Mô tả" name="description"
+                        >
+
+                            <Input.TextArea />
+
+                        </Form.Item>
+
+
 
 
 
@@ -243,54 +278,54 @@ const ListStudent = () => {
                     >
 
 
-                        
-                    <Form.Item label="ID :" name="_id">
-                        <Input disabled />
-                    </Form.Item>
-                    <Form.Item label="Họ và tên:" name="name"
-                        rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
-                        hasFeedback>
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="Tài khoản" name="username"
-                        rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
-                        hasFeedback>
 
-                        <Input disabled />
-                    </Form.Item>
-                    <Form.Item label="Role" name="role"
-                        rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
-                        hasFeedback>
+                        <Form.Item label="ID :" name="_id">
+                            <Input disabled />
+                        </Form.Item>
+                        <Form.Item label="Họ và tên:" name="name"
+                            rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
+                            hasFeedback>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Tài khoản" name="username"
+                            rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
+                            hasFeedback>
 
-                        <Input disabled />
-                    </Form.Item>
-                    <Form.Item label="MSSV" name="mssv"
-                    >
+                            <Input disabled />
+                        </Form.Item>
+                        <Form.Item label="Role" name="role"
+                            rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
+                            hasFeedback>
 
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="Lớp" name="class"
-                    >
+                            <Input disabled />
+                        </Form.Item>
+                        <Form.Item label="MSSV" name="mssv"
+                        >
 
-                        <Input />
-                    </Form.Item>
-                    <Form.Item label="Khoa" name="department"  >
-                        <Select name="department" style={{ width: '100%' }}  >
-                            {
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Lớp" name="class"
+                        >
+
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Khoa" name="department"  >
+                            <Select name="department" style={{ width: '100%' }}  >
+                                {
 
 
-                                listDepartment.map((department, id) => {
-                                    return <Option key={id} value={department._id}>{department.name}</Option>
-                                })
-                            }
-                        </Select>
-                    </Form.Item>
-                    <Form.Item label="Mô tả" name="description"
-                    >
+                                    listDepartment.map((department, id) => {
+                                        return <Option key={id} value={department._id}>{department.name}</Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item label="Mô tả" name="description"
+                        >
 
-                        <Input.TextArea />
+                            <Input.TextArea />
 
-                    </Form.Item>
+                        </Form.Item>
 
 
 
