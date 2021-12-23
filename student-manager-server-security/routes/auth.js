@@ -46,4 +46,12 @@ router.post('/register', async (req, res) => {
     }
 })
 
+router.get('/logout', (req,res)=>{
+    try {
+        res.clearCookie("token").json({msg: "Logout"})
+    } catch (error) {
+        res.status(400).json({ err: "Error while logout" })
+    }
+})
+
 module.exports = router;

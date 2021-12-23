@@ -6,8 +6,8 @@ function LoginService() {}
 LoginService.prototype = {
     login(user) {
         console.log(API_SIGN_IN);
-        return axios.post(API_SIGN_IN, user).then((resp) => {
-            const accessToken = resp.data.token;
+        return axios.post(API_SIGN_IN, user, {withCredentials: true}).then((resp) => {
+            const accessToken = resp.data;
             if (accessToken) {
                 sessionStorage.setItem("accessToken", accessToken);
                 axios.interceptors.request.use(function (config) {
