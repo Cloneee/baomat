@@ -59,7 +59,7 @@ router.post('/change', isUser, async (req,res)=>{
             res.json({msg: "Success changing password"})
         }
         else{
-            res.status(401).json({err: "Wrong password"})
+            res.status(400).json({err: "Wrong password"})
         }
     } catch (error) {
         res.status(400).json({ err: "Error while change the password" })
