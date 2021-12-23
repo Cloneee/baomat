@@ -5,26 +5,35 @@ import {
     Table, Tag, Button, Modal, Form,
     Input, Select, DatePicker, Switch, InputNumber
 } from 'antd';
-import { addProducts, deleteProducts, getProductById, getProducts, getSuppliers, updateProducts } from '../../redux/action/actProduct';
-import moment from 'moment';
 import { Option } from 'antd/lib/mentions';
-import { getstudentById } from '../../redux/action/actStudent';
+import { getstudentById, updateStudents } from '../../redux/action/actStudent';
 const Profile = () => {
     const dispatch = useDispatch();
-
-    const profileFromStore = useSelector(state => state.authentication)
-    const student = profileFromStore.user
+    const listDepartmentFromStore = useSelector((state) => state.departments);
+    const listDepartment = listDepartmentFromStore
+    
+    const profile = useSelector(state => state.profile)
+    const student = profile
     const [isNeedRerender, setisNeedRerender] = useState(false)
     useEffect(() => {
-        dispatch(getstudentById())
-      
-        setisNeedRerender(false)
+
 
     }, [isNeedRerender, dispatch])
-   
+    const onFormSubmit = (obj) =>{
+        dispatch(updateStudents(obj))
+        .then(() =>{
+            
+            Modal.success({
+                content: 'Cập nhật thành công',
+              });
+            setisNeedRerender(true)
+            setisNeedRerender(false)
+
+        })
+    }
     return (
         <div className='row'>
-            <div className='col-10' style={{marginTop:"50px"}}>
+            <div className='col-10' style={{ marginTop: "50px" }}>
 
                 <h4 className='text-center'><strong > THÔNG TIN CÁ NHÂN: </strong></h4>
                 <Form id="detailForm"
@@ -32,7 +41,7 @@ const Profile = () => {
                     wrapperCol={{ span: 20 }}
                     layout="horizontal"
                     initialValues={student}
-                    // onFinish={onFormSubmit}
+                onFinish={onFormSubmit}
                 >
 
 
@@ -48,7 +57,7 @@ const Profile = () => {
                         rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
                         hasFeedback>
 
-                        <Input />
+                        <Input disabled />
                     </Form.Item>
                     <Form.Item label="Role" name="role"
                         rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]}
@@ -56,20 +65,38 @@ const Profile = () => {
 
                         <Input disabled />
                     </Form.Item>
-                    {/* <Form.Item label="Nhà cung cấp" name="supplierId" rules={[{ required: true, message: "Thuộc tính này là bắt buộc!" },]} hasFeedback >
-                            <Select name="supplierId" style={{ width: '100%' }}  >
-                                {
+                    <Form.Item label="MSSV" name="mssv"
+                    >
+
+                        <Input />
+                    </Form.Item>
+                    <Form.Item label="Lớp" name="class"
+                    >
+
+                        <Input />
+                    </Form.Item>
+                    <Form.Item label="Khoa" name="department"  >
+                        <Select name="department" style={{ width: '100%' }}  >
+                            {
 
 
-                                    listSuppliersFromStore.map((supplier, id) => {
-                                        return <Option key={id} value={supplier.id}>{supplier.name}</Option>
-                                    })
-                                }
-                            </Select>
-                        </Form.Item> */}
+                                listDepartment.map((department, id) => {
+                                    return <Option key={id} value={department._id}>{department.name}</Option>
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="Mô tả" name="description"
+                    >
 
-                  
+                        <Input.TextArea />
 
+                    </Form.Item>
+
+                    
+                    <div className='text-center'>
+                        <Button type='primary' htmlType="submit">Lưu</Button>
+                    </div>
 
 
                 </Form>

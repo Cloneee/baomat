@@ -7,7 +7,6 @@ let initialState = {
 
 const reducer = (state = initialState, action) => {
     let { type, user } = action;
-    console.log(user)
     switch (type) {
         case LOGIN_SUCCESSFUL:
             return {

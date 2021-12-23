@@ -1,12 +1,13 @@
-import {  STORE_STUDENT_BY_ID } from "../../constants/constants";
+import {  STORE_PROFILE } from "../../constants/constants";
 
 const initial = {};
 
 const reducer = (state = initial, action) => {
     const { type, data } = action;
+
     switch (type) {
-        case STORE_STUDENT_BY_ID:
-            return {...data};
+        case STORE_PROFILE:
+            return data;
 
         default:
             return state;
