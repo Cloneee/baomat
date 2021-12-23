@@ -38,7 +38,7 @@ router.route('/user/:username', isUser)
             res.status(400).json({ err: "Unexpeted error" })
         }
     })
-    .put(isUser, async (req, res) => {
+    .put(async (req, res) => {
         try {
             let user = await userModel.findOne({ username: req.params.username })
             let newData = {
@@ -59,7 +59,7 @@ router.route('/user/:username', isUser)
             res.status(400).json({ err: "Unexpeted error" })
         }
     })
-    .delete(isUser, async (req, res) => {
+    .delete(async (req, res) => {
         try {
             userModel.deleteOne({ username: req.params.username })
                 .then(resp => res.json({ msg: "Deleted " + req.params.username, value: req.params.username }))

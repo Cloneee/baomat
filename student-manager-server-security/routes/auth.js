@@ -42,6 +42,7 @@ router.post('/register', async (req, res) => {
                 class: data.class,
                 username: data.username, 
                 password: hash, 
+                department: data.department,
                 role: 'student'
              })
             await newUser.save()
