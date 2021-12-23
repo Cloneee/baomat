@@ -15,10 +15,11 @@ router.post('/login', async (req, res, next) => {
         axios.post("http://localhost:8000/api/v1/jwt", { name: userDB.name, username: userDB.username, role: userDB.role })
             .then(respone => {
                 const jwt = respone.data
+                console.log(jwt)
                 res.cookie("token", jwt.token, {
                     secure: true,
                     httpOnly: true,
-                }).json({ msg: "Hello " + userDB.name, user: userDB })
+                }).json({ msg: "Hello " + userDB.name, name: userDB.name,token: jwt.token })
             })
             .catch(err => res.status(400).json({ err: err }))
     }

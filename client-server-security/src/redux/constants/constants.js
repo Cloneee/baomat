@@ -7,6 +7,8 @@ export const LOGOUT_SUCCESSFUL = "LOGOUT_SUCCESSFUL";
 /**product & supplier */
 
 export const STORE_PRODUCTS = "STORE_PRODUCTS";
+export const STORE_STUDENTS = "STORE_STUDENTS";
+
 export const STORE_PRODUCT_BY_ID = "STORE_PRODUCT_BY_ID";
 
 export const STORE_SUPPLIERS = "STORE_SUPPLIERS";

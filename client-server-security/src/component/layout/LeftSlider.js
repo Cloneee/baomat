@@ -7,8 +7,8 @@ const LeftSlider = ({layoutSelectedIndex,onSelectedLayoutIndexChange}) => {
   const { SubMenu } = Menu
   // const [layoutSelectedKey, setlayoutSelectedKey] = useState(layoutSelectedIndex)
   const listIconOfSubMenu =[ <UserOutlined/>,<CommentOutlined />,<NotificationOutlined />,<ControlOutlined />]
-  const subMenu = [{ key: "product", title: 'Sản phẩm', items: [{ key: 1, content: 'Danh sách sản phẩm' }] },
-  { key: "supplier", title: 'Nhà cung cấp', items: [{ key: 2, content: 'Danh sách nhà cung cấp' }] },
+  const subMenu = [{ key: "product", title: 'Sinh viên', items: [{ key: 1, content: 'Danh sách sản phẩm' }] },
+  { key: "supplier", title: 'Nhà cung cấp', items: [{ key: 2, content: 'Danh sách Sinh viên' }] },
 
 ]
   return (

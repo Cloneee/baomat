@@ -11,8 +11,8 @@ LoginService.prototype = {
             if (accessToken) {
                 sessionStorage.setItem("accessToken", accessToken);
                 axios.interceptors.request.use(function (config) {
-                    const token = `Bearer ${accessToken}`;
-                    config.headers.Authorization = token;
+                    // const token = `Bearer ${accessToken}`;
+                    config.headers.token = accessToken;
                     return config;
                 });
             }
