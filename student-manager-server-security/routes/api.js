@@ -32,6 +32,7 @@ router.route('/user/:username', isUser)
         try {
             const username = req.params.username
             const user = await userModel.findOne({ username: username }).select({ __v: false, createDate: false, password: false }).populate('department')
+            user.department = user.department._id
             user ? res.status(200).json(user) : res.status(404).json({ msg: 'User not found' })
         } catch (error) {
             res.status(400).json({ err: "Unexpeted error" })
