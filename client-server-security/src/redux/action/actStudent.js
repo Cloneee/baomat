@@ -13,7 +13,9 @@ import {
 export const getStudents = () => {
     return (dispatch) => {
         return axios
+
             .get(API_STUDENT, { withCredentials: true })
+
             .then((resp) => {
                 // console.log(resp.data)
                 dispatch(createAction(STORE_STUDENTS, resp.data));
