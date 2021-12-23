@@ -21,10 +21,11 @@ const Register = () => {
                 });
             })
             .catch((err) => {
+                console.log(err)
                 Modal.info({
                     icon: <StopOutlined />,
                     title: <strong className="text-danger">Có gì đó không ổn!</strong>,
-                    content: `Vui lòng thử lại sau!`,
+                    content: `${err}`,
                 });
             });
     };

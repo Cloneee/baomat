@@ -2,6 +2,9 @@ const baseAPI = "http://localhost:8080"
 const managerAPI = baseAPI+"/api/v1"
 const authAPI = baseAPI+"/auth"
 const api = baseAPI + '/api'
+
+export const API_STUDENT = managerAPI+"/user"
+
 export const API_PRODUCT = api + '/products'
 export const API_SUPPLIER =   api + '/suppliers'
 

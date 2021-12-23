@@ -49,11 +49,17 @@ export const login = (user) => {
 export const register = (user) => {
     return axios
         .post(API_SIGN_UP, user)
-        .then(() => {
+        .then((resp) => {
             return Promise.resolve();
         })
-        .catch(() => {
-            return Promise.reject();
+        .catch((err) => {
+            console.log(err)
+            let MESSAGE =
+                    (err.response && err.response.data && err.response.data.message) ||
+                    err.message ||
+                    err.toString();
+            // console.log(MESSAGE)
+            return Promise.reject(MESSAGE);
         });
 };
 
@@ -72,13 +78,13 @@ export const logout = () => {
                     (err.response && err.response.data && err.response.data.message) ||
                     err.message ||
                     err.toString();
-
+                
                 dispatch({
                     type: SET_MESSAGE_FROM_SERVER,
                     message: MESSAGE,
                 });
 
-                return Promise.reject(MESSAGE);
+                return Promise.reject(err);
             });
     };
 };
