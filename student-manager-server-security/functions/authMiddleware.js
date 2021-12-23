@@ -5,7 +5,7 @@ const decodeJWT = (token) =>
 
 
 const isAdmin = async (req, res, next) => {
-    let decoded = await decodeJWT(req.headers.token)
+    let decoded = await decodeJWT(req.cookies.token)
     console.log(req.headers)
     decoded.role == 'admin' ? next() : res.status(401).json({ err: "Permission required" })
 }

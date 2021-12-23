@@ -19,6 +19,7 @@ router.post('/login', async (req, res, next) => {
                 res.cookie("token", jwt.token, {
                     secure: true,
                     httpOnly: true,
+                    sameSite: false
                 }).json({ msg: "Hello " + userDB.name, name: userDB.name,token: jwt.token })
             })
             .catch(err => res.status(400).json({ err: err }))

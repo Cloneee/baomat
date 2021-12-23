@@ -1,4 +1,4 @@
-const baseAPI = "http://localhost:8080"
+const baseAPI = "https://localhost:8088"
 const managerAPI = baseAPI+"/api/v1"
 const authAPI = baseAPI+"/auth"
 const api = baseAPI + '/api'

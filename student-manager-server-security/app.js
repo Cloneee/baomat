@@ -4,6 +4,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors')
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
+var privateKey = fs.readFileSync('ssl/server.key', 'utf8');
+var certificate = fs.readFileSync('ssl/server.crt', 'utf8');
+var credentials = { key: privateKey, cert: certificate };
+
 
 const apiRouter = require('./routes/api');
 const authRouter = require('./routes/auth');
@@ -40,5 +47,7 @@ app.use('/api/v1', apiRouter);
 app.use('*', (req, res) => {
     res.status(404).json({ err: "API not found" })
 })
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
 
-module.exports = app;
+module.exports = { httpServer, httpsServer };

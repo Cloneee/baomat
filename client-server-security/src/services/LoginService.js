@@ -10,11 +10,11 @@ LoginService.prototype = {
             const accessToken = resp.data;
             if (accessToken) {
                 sessionStorage.setItem("accessToken", accessToken);
-                axios.interceptors.request.use(function (config) {
-                    // const token = `Bearer ${accessToken}`;
-                    config.headers.token = accessToken;
-                    return config;
-                });
+                // axios.interceptors.request.use(function (config) {
+                //     // const token = `Bearer ${accessToken}`;
+                //     // config.headers.token = accessToken;
+                //     return config;
+                // });
             }
             return resp;
         });
