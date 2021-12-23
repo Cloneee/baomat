@@ -3,13 +3,14 @@ const router = express.Router();
 const { hashPassword, comparePassword } = require('../functions/hash')
 const axios = require('axios')
 const userModel = require('../models/userModel')
+const { isUser } = require('../functions/authMiddleware')
 
 // * Login register section
 router.post('/login', async (req, res, next) => {
     const user = req.body
     const userDB = await userModel.findOne({ username: user.username })
     if (!userDB) {
-        res.status(400).json({ msg: "User don't exist" })
+        res.status(400).json({ err: "User don't exist" })
     }
     else if (comparePassword(user.password, userDB.password)) {
         axios.post("http://localhost:8000/api/v1/jwt", { name: userDB.name, username: userDB.username, role: userDB.role })
@@ -25,7 +26,7 @@ router.post('/login', async (req, res, next) => {
             .catch(err => res.status(400).json({ err: err }))
     }
     else {
-        res.status(400).json({ msg: "Wrong password" })
+        res.status(400).json({ err: "Wrong password" })
     }
 });
 
@@ -44,6 +45,24 @@ router.post('/register', async (req, res) => {
         }
     } catch (error) {
         res.status(400).json({ err: "Error while register" })
+    }
+})
+
+router.post('/change', isUser, async (req,res)=>{
+    try {
+        const {oldPass, newPass} = req.body
+        const respone = await axios.post('http://localhost:8000/api/v1/auth', { token: req.cookies.token })
+        const userDB = await userModel.findOne({username: respone.data.username}).select({password: true})
+        if (comparePassword(oldPass,userDB.password)){
+            userDB.password = hashPassword(newPass)
+            await userDB.save()
+            res.json({msg: "Success changing password"})
+        }
+        else{
+            res.status(401).json({err: "Wrong password"})
+        }
+    } catch (error) {
+        res.status(400).json({ err: "Error while change the password" })
     }
 })
 
