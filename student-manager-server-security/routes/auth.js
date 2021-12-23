@@ -18,7 +18,7 @@ router.post('/login', async (req, res, next) => {
                 res.cookie("token", jwt.token, {
                     secure: true,
                     httpOnly: true,
-                }).json({ msg: "Hello " + userDB.name, name: userDB.name })
+                }).json({ msg: "Hello " + userDB.name, user: userDB })
             })
             .catch(err => res.status(400).json({ err: err }))
     }
@@ -42,6 +42,14 @@ router.post('/register', async (req, res) => {
         }
     } catch (error) {
         res.status(400).json({ err: "Error while register" })
+    }
+})
+
+router.get('/logout', (req,res)=>{
+    try {
+        res.clearCookie("token").json({msg: "Logout"})
+    } catch (error) {
+        res.status(400).json({ err: "Error while logout" })
     }
 })
 

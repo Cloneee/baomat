@@ -20,14 +20,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 const uri = 'mongodb+srv://user:user@learningmongo1.89tk5.gcp.mongodb.net/SecutityUser?retryWrites=true'
 mongoose.Promise = global.Promise
 const db = mongoose.connection
-mongoose.connect(process.env.DB_CONNECTION || uri, { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.DB_CONNECTION || uri, { useNewUrlParser: true, useUnifiedTopology: true })
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 //End DB Section
-app.use(cors({origin: "http://localhost:3000"}))
+
+const corsOptions = {
+    credentials: true,
+    origin: "https://localhost:3000",
+    preflightContinue: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    optionsSuccessStatus: 200,
+    allowedHeaders: "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers",
+    exposedHeaders: true
+}
+
+app.use(cors(corsOptions))
 app.use('/auth', authRouter)
 app.use('/api/v1', apiRouter);
-app.use('*', (req,res)=>{
-    res.status(404).json({err: "API not found"})
+app.use('*', (req, res) => {
+    res.status(404).json({ err: "API not found" })
 })
 
 module.exports = app;
