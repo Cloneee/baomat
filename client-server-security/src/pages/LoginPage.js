@@ -22,8 +22,11 @@ const LoginPage = () => {
 
     const loginHandle = (userLogin) => {
         dispatch(login(userLogin))
-            .then(() => {
+            .then((resp) => {
+                
+                
                 history.push("/dashboard");
+               
             })
             .catch(() => {
                 Modal.error({
@@ -44,7 +47,7 @@ const LoginPage = () => {
 
     return (
         <div>
-            {authentication.isLoggin === false ? (
+            {authentication.isLoggin === false && 
                 <Row gutter={6}>
                     <Col className="gutter-row" span={24} style={fullWidthStyle}></Col>
                     <Col className="gutter-row" span={6}></Col>
@@ -114,10 +117,11 @@ const LoginPage = () => {
 
                     <Col className="gutter-row" span={6}></Col>
                 </Row>
+                }
+            
+            
                 
-            ) : (
-                history.push("/dashbroad")
-            )}
+            
         </div>
     );
 };

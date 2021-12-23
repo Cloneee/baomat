@@ -20,7 +20,7 @@ router.post('/login', async (req, res, next) => {
                     secure: true,
                     httpOnly: true,
                     sameSite: false
-                }).json({ msg: "Hello " + userDB.name, name: userDB.name,token: jwt.token })
+                }).json({ profile: userDB,token: jwt.token })
             })
             .catch(err => res.status(400).json({ err: err }))
     }

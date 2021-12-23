@@ -2,9 +2,9 @@ import axios from "axios";
 import { API_PRODUCT, API_STUDENT, API_SUPPLIER } from "../constants/api";
 import {
     createAction,
-    STORE_PRODUCTS,
     STORE_PRODUCT_BY_ID,
     STORE_STUDENTS,
+    STORE_STUDENT_BY_ID,
     STORE_SUPPLIERS,
     STORE_SUPPLIER_BY_ID,
 } from "../constants/constants";
@@ -12,7 +12,7 @@ import {
 export const getStudents = () => {
     return (dispatch) => {
         return axios
-            .get(API_STUDENT)
+            .get(API_STUDENT,{withCredentials:true})
             .then((resp) => {
                 console.log(resp.data)
                 dispatch(createAction(STORE_STUDENTS, resp.data));
@@ -21,17 +21,18 @@ export const getStudents = () => {
     };
 };
 
-export const getProductById = (productId) => {
+export const getstudentById = (StudentId) => {
     return (dispatch) => {
         return axios
-            .get(API_PRODUCT + `/${productId}`)
+            .get(API_STUDENT + `/${StudentId}`)
             .then((resp) => {
                 
-                dispatch(createAction(STORE_PRODUCT_BY_ID, resp.data));
+                dispatch(createAction(STORE_STUDENT_BY_ID, resp.data));
             })
             .catch((err) => console.error(err));
     };
 };
+
 export const addProducts = (product) => {
     return (dispatch) => {
         return axios

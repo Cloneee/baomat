@@ -8,6 +8,7 @@ import {
 import { API_SIGN_UP } from "../constants/api";
 import LoginService from "../../services/LoginService";
 import axios from "axios";
+import { getstudentById } from "./actStudent";
 
 export const storePhoneAndPasswordWhenLogin = (key, value) => {
     //key and value was created to save a dynamic object
@@ -23,7 +24,8 @@ export const login = (user) => {
         return LoginService.login(user)
             .then((resp) => {
                 dispatch({
-                    type: LOGIN_SUCCESSFUL
+                    type: LOGIN_SUCCESSFUL,
+                    user: resp.data.profile
                 })
                 return Promise.resolve();
             })

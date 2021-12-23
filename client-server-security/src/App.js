@@ -3,17 +3,21 @@ import routes from "./routes";
 import "antd/dist/antd.css";
 import { ConfigProvider } from "antd";
 import viVN from "antd/lib/locale/vi_VN";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 // import { useDispatch } from "react-redux";
 
 
 function App() {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const maproutes = routes.map((route, index) => {
         return (
             <Route key={index} path={route.path} component={route.component} exact={route.exact} />
         );
     });
-  
+    useEffect(() => {
+        // dispatch()
+    }, [])
 
     return (
         <Router>
