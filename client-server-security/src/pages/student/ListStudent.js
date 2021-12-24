@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
     Table, Tag, Button, Modal, Form,
-    Input, Select, DatePicker, Switch, InputNumber
+    Input, Select,
 } from 'antd';
 import { addStudent, getstudentById, getStudents, updateStudents, } from '../../redux/action/actStudent';
 import { Option } from 'antd/lib/mentions';
@@ -12,13 +12,14 @@ const ListStudent = () => {
     const dispatch = useDispatch();
     const studentFromStore = useSelector((state) => state.studentById);
     const listStudentFromStore = useSelector((state) => state.students);
-    const listStudent = listStudentFromStore.data
     const listDepartmentFromStore = useSelector((state) => state.departments);
     const listDepartment = listDepartmentFromStore
     const [isNeedRerender, setisNeedRerender] = useState(false)
     useEffect(() => {
         dispatch(getStudents())
         dispatch(getDepartments())
+        // console.log("abc")
+        // console.log(listStudentFromStore)
 
     }, [isNeedRerender, dispatch])
     const columns = [
@@ -181,7 +182,8 @@ const ListStudent = () => {
         <div>
             <div className="text-end" ><Button onClick={() => showModalAdd()} type="primary" icon={<i className="fas fa-plus-circle"></i>}> &nbsp;Thêm sinh viên </Button></div>
 
-            <Table style={{ marginTop: '15px' }} rowKey="id" columns={columns} dataSource={listStudent} pagination={false} scroll={{ y: 850 }} />
+            <Table style={{ marginTop: '15px' }} rowKey="id" columns={columns} dataSource={listStudentFromStore} pagination={false} scroll={{ y: 850 }} />
+            
             {isShowAddModal && <Modal closable={false}
                 style={{ top: 20 }}
                 title={<strong>Thêm sản phẩm</strong>}

@@ -14,8 +14,7 @@ export const STORE_PRODUCT_BY_ID = "STORE_PRODUCT_BY_ID";
 export const STORE_STUDENT_BY_ID = "STORE_STUDENT_BY_ID";
 export const STORE_PROFILE = "STORE_PROFILE";
 
-export const STORE_SUPPLIERS = "STORE_SUPPLIERS";
-export const STORE_SUPPLIER_BY_ID = "STORE_SUPPLIER_BY_ID";
+
 
 /**Message from server */
 export const SET_MESSAGE_FROM_SERVER = "SET_MESSAGE_FORM_SERVER";

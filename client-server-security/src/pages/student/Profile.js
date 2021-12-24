@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-    Table, Tag, Button, Modal, Form,
-    Input, Select, DatePicker, Switch, InputNumber
+     Button, Modal, Form,
+    Input, Select
 } from 'antd';
 import { Option } from 'antd/lib/mentions';
-import { getstudentById, updateStudents } from '../../redux/action/actStudent';
+import {  getProfile, updateStudents } from '../../redux/action/actStudent';
 const Profile = () => {
     const dispatch = useDispatch();
     const listDepartmentFromStore = useSelector((state) => state.departments);
-    const listDepartment = listDepartmentFromStore
-    
-    const profile = useSelector(state => state.profile)
-    const student = profile
-    const [isNeedRerender, setisNeedRerender] = useState(false)
-    useEffect(() => {
 
+    const profileFromstore = useSelector(state => state.profile)
+    console.log(profileFromstore)
+    const [isNeedRerender, setisNeedRerender] = useState(false)
+    
+    useEffect(() => {
+        const username = sessionStorage.getItem("username");
+        dispatch(getProfile(username))
 
     }, [isNeedRerender, dispatch])
     const onFormSubmit = (obj) =>{
@@ -33,15 +34,16 @@ const Profile = () => {
     }
     return (
         <div className='row'>
-            <div className='col-10' style={{ marginTop: "50px" }}>
-
-                <h4 className='text-center'><strong > THÔNG TIN CÁ NHÂN: </strong></h4>
+         { profileFromstore !== {} ? <div className='col-10' style={{ marginTop: "50px" }}>
+               
+               <h4 className='text-center'><strong > THÔNG TIN CÁ NHÂN: </strong></h4>
                 <Form id="detailForm"
                     labelCol={{ span: 6 }}
                     wrapperCol={{ span: 20 }}
                     layout="horizontal"
-                    initialValues={student}
-                onFinish={onFormSubmit}
+                    initialValues={profileFromstore}
+                    // value={profileFromstore}
+                    onFinish={onFormSubmit}
                 >
 
 
@@ -80,7 +82,7 @@ const Profile = () => {
                             {
 
 
-                                listDepartment.map((department, id) => {
+                                listDepartmentFromStore.map((department, id) => {
                                     return <Option key={id} value={department._id}>{department.name}</Option>
                                 })
                             }
@@ -100,7 +102,7 @@ const Profile = () => {
 
 
                 </Form>
-            </div>
+            </div> : <div></div>}
         </div>
     )
 }

@@ -12,6 +12,7 @@ const LoginPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const authentication = useSelector((state) => state.authentication);
+    
 
     useEffect(() => {
         const token = JSON.stringify(sessionStorage.getItem("accessToken"));
@@ -24,7 +25,6 @@ const LoginPage = () => {
         dispatch(login(userLogin))
             .then((resp) => {
                 
-                
                 history.push("/dashboard");
                
             })
@@ -32,7 +32,7 @@ const LoginPage = () => {
                 Modal.error({
                     icon: <StopOutlined />,
                     title: <strong className="text-danger">Thông báo!</strong>,
-                    content: `đăng nhập không thành công!`,
+                    content: `Đăng nhập không thành công!`,
                 });
             });
     };
@@ -47,7 +47,7 @@ const LoginPage = () => {
 
     return (
         <div>
-            {authentication.isLoggin === false && 
+            {authentication.isLoggin === false &&
                 <Row gutter={6}>
                     <Col className="gutter-row" span={24} style={fullWidthStyle}></Col>
                     <Col className="gutter-row" span={6}></Col>
@@ -117,6 +117,7 @@ const LoginPage = () => {
 
                     <Col className="gutter-row" span={6}></Col>
                 </Row>
+               
                 }
             
             

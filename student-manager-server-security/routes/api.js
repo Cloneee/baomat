@@ -31,14 +31,14 @@ router.route('/user/:username', isUser)
     .get(async (req, res) => {
         try {
             const username = req.params.username
-            const user = await userModel.findOne({ username: username }).select({ __v: false, createDate: false, password: false }).populate('department')
-            user.department = user.department._id
+            const user = await userModel.findOne({ username: username }).select({ __v: false, password: false }).populate('department')
+            user ? user.department = user?.department?._id : null
             user ? res.status(200).json(user) : res.status(404).json({ msg: 'User not found' })
         } catch (error) {
             res.status(400).json({ err: "Unexpeted error" })
         }
     })
-    .put(isUser, async (req, res) => {
+    .put(async (req, res) => {
         try {
             let user = await userModel.findOne({ username: req.params.username })
             let newData = {
@@ -59,7 +59,7 @@ router.route('/user/:username', isUser)
             res.status(400).json({ err: "Unexpeted error" })
         }
     })
-    .delete(isUser, async (req, res) => {
+    .delete(async (req, res) => {
         try {
             userModel.deleteOne({ username: req.params.username })
                 .then(resp => res.json({ msg: "Deleted " + req.params.username, value: req.params.username }))

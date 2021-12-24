@@ -1,16 +1,26 @@
-import { Card, Col, Modal, Row } from "antd";
-import React from "react";
+import { Card, Col, Modal, Row, Select } from "antd";
+import React, { useEffect } from "react";
 
 import { Form, Input, Button } from "antd";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CheckOutlined, StopOutlined } from "@ant-design/icons";
 import { register } from "../redux/action/actLogin";
+import { getDepartments } from "../redux/action/actDepartment";
+import { Option } from "antd/lib/mentions";
 
 const Register = () => {
     const fullWidthStyle = { margin: "10px", height: "150px" };
+    const dispatch = useDispatch();
+
     let history = useHistory();
+    const listDepartmentFromStore = useSelector((state) => state.departments);
+    const listDepartment = listDepartmentFromStore
     const authentication = useSelector((state) => state.authentication);
+    useEffect(() => {
+        dispatch(getDepartments())
+
+    }, [])
     const loginHandle = (user) => {
         register(user)
             .then(() => {
@@ -19,6 +29,7 @@ const Register = () => {
                     title: <strong className="text-danger">Thông báo</strong>,
                     content: `Đăng ký thành công!`,
                 });
+                history.push("/")
             })
             .catch((err) => {
                 console.log(err)
@@ -68,6 +79,34 @@ const Register = () => {
                                     <Input />
                                 </Form.Item>
                                 <Form.Item
+                                    label="Tài khoản:"
+                                    name="username"
+                                    rules={[
+                                        { required: true, message: "Vui lòng nhập tài khoản!" },
+                                        {
+                                            pattern: /[\D]/g,
+                                            message: "Tài khoản phải bắt đầu bằng chữ",
+                                        },
+                                    ]}
+                                    hasFeedback
+                                >
+                                    <Input />
+                                </Form.Item>
+                                <Form.Item
+                                    label="Mật khẩu:"
+                                    name="password"
+                                    rules={[
+                                        { required: true, message: "Vui lòng nhập mật khẩu!" },
+                                        {
+                                            pattern: /[\w]/g,
+                                            message: "Mật khẩu không hợp lệ!",
+                                        },
+                                    ]}
+                                    hasFeedback
+                                >
+                                    <Input.Password />
+                                </Form.Item>
+                                <Form.Item
                                     label="MSSV : "
                                     name="mssv"
                                     rules={[
@@ -89,35 +128,19 @@ const Register = () => {
                                 >
                                     <Input />
                                 </Form.Item>
-                                <Form.Item
-                                    label="Tài khoản:"
-                                    name="username"
-                                    rules={[
-                                        { required: true, message: "Vui lòng nhập tài khoản!" },
-                                        {
-                                            pattern: /[\D]/g,
-                                            message: "Tài khoản phải bắt đầu bằng chữ",
-                                        },
-                                    ]}
-                                    hasFeedback
-                                >
-                                    <Input />
-                                </Form.Item>
+                                <Form.Item label="Khoa" name="department"  >
+                            <Select name="department" style={{ width: '100%' }}  >
+                                {
 
-                                <Form.Item
-                                    label="Mật khẩu:"
-                                    name="password"
-                                    rules={[
-                                        { required: true, message: "Vui lòng nhập mật khẩu!" },
-                                        {
-                                            pattern: /[\w]/g,
-                                            message: "Mật khẩu không hợp lệ!",
-                                        },
-                                    ]}
-                                    hasFeedback
-                                >
-                                    <Input.Password />
-                                </Form.Item>
+
+                                    listDepartment.map((department, id) => {
+                                        return <Option key={id} value={department._id}>{department.name}</Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+
+                             
 
                                 <Form.Item wrapperCol={{ offset: 10, span: 24 }}>
                                     <Button

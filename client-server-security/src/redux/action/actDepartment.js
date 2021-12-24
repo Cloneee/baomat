@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_DEPARTMENT, API_PRODUCT, API_STUDENT, API_SUPPLIER } from "../constants/api";
+import { API_DEPARTMENT } from "../constants/api";
 import {
     createAction,
     STORE_DEPARTMENTS,
