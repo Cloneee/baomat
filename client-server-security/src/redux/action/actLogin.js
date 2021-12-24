@@ -2,6 +2,7 @@ import {
     CLEAR_MESSAGE_FROM_SERVER,
     LOGIN_FAILED,
     LOGIN_SUCCESSFUL,
+    LOGOUT_SUCCESSFUL,
     SET_MESSAGE_FROM_SERVER,
     STORE_PHONE_AND_PASSWORD_WHEN_LOGIN,
 } from "../constants/constants";
@@ -71,12 +72,15 @@ export const logout = () => {
         return LoginService.logout()
             .then(() => {
                 dispatch({
-                    type: CLEAR_MESSAGE_FROM_SERVER,
+                    type: LOGOUT_SUCCESSFUL,
                 });
 
                 return Promise.resolve();
             })
             .catch((err) => {
+                dispatch({
+                    type: LOGOUT_SUCCESSFUL,
+                });
                 let MESSAGE =
                     (err.response && err.response.data && err.response.data.message) ||
                     err.message ||

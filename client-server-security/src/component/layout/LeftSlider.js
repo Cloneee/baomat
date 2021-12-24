@@ -10,17 +10,17 @@ const LeftSlider = ({layoutSelectedIndex,onSelectedLayoutIndexChange}) => {
 
   // const [layoutSelectedKey, setlayoutSelectedKey] = useState(layoutSelectedIndex)
   const listIconOfSubMenu =[ <UserOutlined/>,<CommentOutlined />,<NotificationOutlined />,<ControlOutlined />]
-  let subMenu = [{ key: "product", title: 'Sinh viên', items: [{ key: 1, content: 'Thông tin cá nhân' },{ key: 2, content: 'Danh sách sinh viên' }] },
+  let subMenu = [{ key: "product", title: 'Sinh viên', items: [{ key: 0, content: 'Thông tin dự án' },{ key: 1, content: 'Thông tin cá nhân' },{ key: 2, content: 'Danh sách sinh viên' }] },
   { key: "supplier", title: 'Khoa', items: [{ key: 3, content: 'Danh sách khoa' }] },
 ]
-  // if(authentication.user.role !=='admin') subMenu = [{ key: "product", title: 'Sinh viên', items: [{ key: 1, content: 'Thông tin cá nhân' }] },
+  if(authentication.user.role !=='admin') subMenu = [{ key: "product", title: 'Sinh viên', items: [{ key: 0, content: 'Thông tin dự án' },{ key: 1, content: 'Thông tin cá nhân' }] },
   
-// ]
+]
   return (
     <Sider width={250} className="site-layout-background">
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={['0']}
         defaultOpenKeys={['product']}
         style={{ height: '100%', borderRight: 0 }}
       >
@@ -32,7 +32,7 @@ const LeftSlider = ({layoutSelectedIndex,onSelectedLayoutIndexChange}) => {
                 {
                   sub.items.map((item, id) => {
                     return (
-                      <Menu.Item key={item.key} onClick={()=>onSelectedLayoutIndexChange(item.key-1)}>{item.content}</Menu.Item>
+                      <Menu.Item key={item.key} onClick={()=>onSelectedLayoutIndexChange(item.key)}>{item.content}</Menu.Item>
                     )
                   })
                 }

@@ -1,9 +1,10 @@
+
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'; import {
     Table, Tag, Button
 } from 'antd';
 import { getDepartments } from '../../redux/action/actDepartment';
-const ListDepartment = () => {
+const About = () => {
     const dispatch = useDispatch();
 
     const listDepartmentFromStore = useSelector((state) => state.departments);
@@ -13,30 +14,15 @@ const ListDepartment = () => {
         dispatch(getDepartments())
       
     }, [isNeedRerender, dispatch])
-
-    const columns = [
-        {
-            title: 'ID',
-            dataIndex: '_id',
-            key: '_id',
-        },
-        {
-            title: 'Tên Khoa',
-            dataIndex: 'name',
-            key: 'name',
-            render: text => <strong>{text}</strong>,
-        },
-        
-
-
-
-    ]
     return (
-        <div>
-        <Table style={{ marginTop: '15px' }} rowKey="id" columns={columns} dataSource={listDepartment} pagination={false} scroll={{ y: 850 }} />
-
+        <div className='row' >
+            <div className='text-center' style={{marginTop:"50px"}}> 
+            <strong style={{fontSize:"130%"}}>Thông tin dự án</strong>
+            
+            </div>
+          
         </div>
     )
 }
 
-export default ListDepartment
+export default About

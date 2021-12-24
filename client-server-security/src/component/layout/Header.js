@@ -1,7 +1,18 @@
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { logout } from '../../redux/action/actLogin';
 
 const Header = () => {
-  
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const logoutHandle = () =>{
+    sessionStorage.clear();
+    dispatch(logout())
+    history.push("/")
+  }
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ paddingRight: '50px' }}>
@@ -51,8 +62,8 @@ const Header = () => {
               data-mdb-toggle="dropdown"
               aria-expanded="false"
             >
-              <i className="fas fa-bell"></i>
-              <span className="badge rounded-pill badge-notification bg-danger">1</span>
+              {/* <i className="fas fa-bell"></i>
+              <span className="badge rounded-pill badge-notification bg-danger">1</span> */}
             </a>
             <ul
               className="dropdown-menu dropdown-menu-end"
@@ -84,18 +95,18 @@ const Header = () => {
                 alt=""
                 loading="lazy"
               /> */}
-              {/* <Avatar src={userProfile.imageUrl}/> */}
+              <Avatar icon={<UserOutlined />} />
             </a>
             <ul
               className="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdownMenuLink"
             >
-              <li>
-                <a className="dropdown-item" type="button" >Hồ sơ cá nhân</a>
-              </li>
+             
             
               <li>
-                <a type="button" className="dropdown-item text-danger" href="#top" >Đăng xuất</a>
+                <a type="button" className="dropdown-item text-danger"
+                onClick={() => logoutHandle()}
+                >Đăng xuất</a>
               </li>
             </ul>
           </div>

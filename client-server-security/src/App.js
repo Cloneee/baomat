@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useRouteMatch } from "react-router-dom";
 import routes from "./routes";
 import "antd/dist/antd.css";
 import { ConfigProvider } from "antd";
 import viVN from "antd/lib/locale/vi_VN";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import Header from './component/layout/Header'
 // import { useDispatch } from "react-redux";
 
 
@@ -15,14 +16,17 @@ function App() {
             <Route key={index} path={route.path} component={route.component} exact={route.exact} />
         );
     });
+    const authen = useSelector(state => state.authentication)
     useEffect(() => {
-        // dispatch()
+       
     }, [])
 
     return (
         <Router>
             <ConfigProvider locale={viVN}>
                 {/* {isLoading && <Loading location="Loading...." /> } */}
+              { typeof authen.user.username !== 'undefined' &&
+  <Header/>}
                 <div className="App">
                     <Switch>{maproutes}</Switch>
                 </div>

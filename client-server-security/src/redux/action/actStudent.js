@@ -1,9 +1,7 @@
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 import axios from "axios";
 import {  API_SIGN_UP, API_STUDENT,  } from "../constants/api";
 import {
     createAction,
- 
     STORE_PROFILE,
     STORE_STUDENTS,
     STORE_STUDENT_BY_ID,
