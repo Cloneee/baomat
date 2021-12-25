@@ -324,9 +324,7 @@ const ListStudent = () => {
                         </Form.Item>
                         <Form.Item label="Mô tả" name="description"
                         >
-
-                            <Input.TextArea />
-
+                            <div>{studentFromStore.description}</div>
                         </Form.Item>
 
 
