@@ -12,15 +12,15 @@ const About = () => {
     const [isNeedRerender, setisNeedRerender] = useState(false)
     useEffect(() => {
         dispatch(getDepartments())
-      
+
     }, [isNeedRerender, dispatch])
     return (
         <div className='row' >
-            <div className='text-center' style={{marginTop:"50px"}}> 
-            <strong style={{fontSize:"130%"}}>Thông tin dự án</strong>
-            
+            <div className='text-center' style={{ marginTop: "50px" }}>
+                <strong style={{ fontSize: "130%" }}>Thông tin dự án</strong>
+                <p>Demo hệ thống quản lý sinh viên, phòng chống XSS và áp dụng CORS</p>
             </div>
-          
+
         </div>
     )
 }

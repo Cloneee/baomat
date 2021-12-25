@@ -12,7 +12,7 @@ Cách phòng chống XSS (Cross site scripting) và ngăn chặn leak data bằn
     Student manager server http/https: 8080/8088
     Render server: 3000
 
-## Hướng dẫn chạy chương trình
+## Hướng dẫn chạy chương trình (Windows)
 
 1. Đảm bảo máy tính đã cài đặt NodeJS
 
@@ -26,6 +26,6 @@ Cách phòng chống XSS (Cross site scripting) và ngăn chặn leak data bằn
 
 4. Chạy file **run.bat** trong thử mục giải nén để chạy cả 3 server
 
-5. Truy cập địa chỉ <https://localhost:3000> để vào giao diện client 
+5. Truy cập địa chỉ <https://localhost:3000> để vào giao diện client
 
-6. Truy cập <https://localhost:8088> để mở quyền truy cập của browser cho server (Nếu không thể load được dữ liệu)
+6. Truy cập <https://localhost:8088> để mở quyền truy cập của browser cho server (Nếu không thể load được dữ liệu vì file cert tự tạo, chưa được windows chứng thực)
