@@ -24,10 +24,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Setup database
-const uri = 'mongodb+srv://user:user@learningmongo1.89tk5.gcp.mongodb.net/SecutityUser?retryWrites=true'
 mongoose.Promise = global.Promise
 const db = mongoose.connection
-mongoose.connect(process.env.DB_CONNECTION || uri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true })
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 //End DB Section
 
